@@ -1,53 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin — Chalet Lièvre</title>
-  <script src="https://unpkg.com/netlify-cms@2/dist/netlify-cms.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chalet Lièvre – Verbier</title>
+  <script src="/cms-loader.js" defer></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <script>
-    window.CMS_MANUAL_INIT = true;
-    CMS.init({
-      config: {
-        backend: {
-          name: "git-gateway",
-          branch: "main",
-        },
-        media_folder: "images/uploads",
-        public_folder: "/images/uploads",
-        collections: [
-          {
-            name: "site",
-            label: "Contenu du site",
-            files: [
-              {
-                name: "home",
-                label: "Page d'accueil",
-                file: "content/home.md",
-                fields: [
-                  { label: "Titre", name: "title", widget: "string" },
-                  { label: "Description", name: "description", widget: "text" },
-                  {
-                    label: "Images du Carousel",
-                    name: "carousel",
-                    widget: "list",
-                    field: { label: "Image", name: "image", widget: "image" }
-                  },
-                  {
-                    label: "Équipements",
-                    name: "amenities",
-                    widget: "list",
-                    field: { label: "Élément", name: "item", widget: "string" }
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    });
-  </script>
+<header>
+  <h1 id="title">Chargement...</h1>
+</header>
+<section id="about">
+  <h2>Le Chalet</h2>
+  <p id="description">Chargement...</p>
+
+  <div class="carousel" id="carousel"></div>
+</section>
+<section id="details">
+  <h2>Détails & Équipements</h2>
+  <ul id="amenities"></ul>
+</section>
+<footer>
+  © 2025 Chalet Lièvre – Verbier
+</footer>
 </body>
 </html>
