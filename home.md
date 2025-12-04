@@ -1,15 +1,13 @@
-title: "Chalet Lièvre – Vue Panoramique à Verbier"
-description: "Superbe duplex situé à Savoleyres, Verbier, offrant une vue imprenable sur les Alpes. À seulement 3 minutes du télécabine."
+---
+title: "Chalet Lièvre — Verbier"
+short_description: "Chalet de luxe à Verbier Savoleyres : 4 chambres, 2 salles de bain, parking intérieur, vue Alpes."
+description: "<p>Le Chalet Lièvre est un chalet élégant et moderne situé à Savoleyres, Verbier. Il combine le charme alpin et un design contemporain pour un séjour exceptionnel.</p><p>Idéal pour familles ou groupes, proche des pistes et des commodités.</p>"
 carousel:
-  - "/images/uploads/IMG-20251124-WA0007.jpg"
-  - "/images/uploads/IMG-20251124-WA0005.jpg"
-  - "/images/uploads/IMG-20251110-WA0067.jpg"
 amenities:
-  - "Capacité : jusqu’à 7 voyageurs"
-  - "4 chambres – 4 lits"
+  - "4 chambres"
   - "2 salles de bain"
-  - "Cheminée – Ambiance chalet"
-  - "Parking intérieur gratuit"
-  - "Cuisine entièrement équipée"
-  - "Wi-Fi – TV – Espace de travail"
-  - "Proximité immédiate des pistes (Savoleyres)"
+  - "Parking intérieur"
+  - "Cheminée"
+  - "Cuisine équipée"
+location: "Verbier, Savoleyres, Suisse"
+---
