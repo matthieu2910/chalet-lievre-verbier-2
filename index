@@ -1,23 +1,37 @@
----
-import chalet from "../data/chalet.json";
----
+<!DOCTYPE html>
 <html lang="fr">
-  <body>
-    <h1>{chalet.titre}</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chalet Lièvre – Verbier</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/cms-loader.js" defer></script>
+</head>
+<body>
+<header>
+  <h1 id="title">Chargement...</h1>
+  <p id="short_description" class="subtitle"></p>
+</header>
 
-    <p>{chalet.description}</p>
+<section id="carousel_section">
+  <div id="carousel" class="carousel"></div>
+</section>
 
-    <h2>Caractéristiques</h2>
-    <ul>
-      <li>Chambres : {chalet.chambres}</li>
-      <li>Salles de bain : {chalet.sdb}</li>
-      <li>Parking : {chalet.parking}</li>
-      <li>Localisation : {chalet.localisation}</li>
-    </ul>
+<section id="about">
+  <h2>Le Chalet</h2>
+  <div id="description" class="description"></div>
+</section>
 
-    <h2>Galerie</h2>
-    {chalet.photos.map(photo => (
-      <img src={photo} width="400" />
-    ))}
-  </body>
+<section id="details">
+  <h2>Équipements</h2>
+  <ul id="amenities"></ul>
+
+  <h2>Localisation</h2>
+  <p id="location"></p>
+</section>
+
+<footer>
+  © 2025 Chalet Lièvre – Verbier
+</footer>
+</body>
 </html>
