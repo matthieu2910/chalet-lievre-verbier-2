@@ -1,0 +1,23 @@
+---
+import chalet from "../data/chalet.json";
+---
+<html lang="fr">
+  <body>
+    <h1>{chalet.titre}</h1>
+
+    <p>{chalet.description}</p>
+
+    <h2>Caractéristiques</h2>
+    <ul>
+      <li>Chambres : {chalet.chambres}</li>
+      <li>Salles de bain : {chalet.sdb}</li>
+      <li>Parking : {chalet.parking}</li>
+      <li>Localisation : {chalet.localisation}</li>
+    </ul>
+
+    <h2>Galerie</h2>
+    {chalet.photos.map(photo => (
+      <img src={photo} width="400" />
+    ))}
+  </body>
+</html>
