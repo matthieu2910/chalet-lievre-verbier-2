@@ -2,18 +2,16 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "public/uploads"
-public_folder: "/uploads"
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
 
 collections:
-  - name: "chalet"
-    label: "Chalet Lièvre"
-    file: "src/data/chalet.json"
-    fields:
-      - { label: "Titre", name: "titre", widget: "string" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Chambres", name: "chambres", widget: "number" }
-      - { label: "Salles de bain", name: "sdb", widget: "number" }
-      - { label: "Parking", name: "parking", widget: "string" }
-      - { label: "Localisation", name: "localisation", widget: "string" }
-      - { label: "Photos", name: "photos", widget: "list", field: { label: "Photo", name: "image", widget: "image" } }
+  - name: "pages"
+    label: "Pages"
+    files:
+      - file: "home.md"
+        label: "Page d'accueil"
+        name: "home"
+        fields:
+          - { label: "Titre", name: "title", widget: "string" }
+          - { label: "Contenu", name: "body", widget: "markdown" }
