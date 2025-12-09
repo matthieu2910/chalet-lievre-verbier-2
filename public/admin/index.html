@@ -18,9 +18,13 @@
         padding: 20px;
         background: #f5f5f5;
       }
+      #nc-root {
+        margin-top: 20px;
+      }
     </style>
   </head>
   <body>
+    <div id="nc-root"></div>
     <script>
       // Initialize Netlify Identity
       if (window.netlifyIdentity) {
@@ -31,6 +35,14 @@
             });
           }
         });
+      }
+      
+      // Initialize Decap CMS
+      if (window.CMS) {
+        window.CMS.init();
+      } else {
+        // Fallback if CMS doesn't load
+        document.getElementById('nc-root').innerHTML = '<div style="padding: 40px; text-align: center;"><h2>Loading CMS...</h2><p>If this page remains blank, please check:</p><ul style="text-align: left; display: inline-block;"><li>Netlify Identity is enabled in your Netlify dashboard</li><li>Git Gateway is enabled</li><li>You have been invited to access the admin panel</li></ul></div>';
       }
     </script>
   </body>

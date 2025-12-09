@@ -1,19 +1,12 @@
 backend:
-  name: github
-  repo: matthieu2910/chalet-lievre-verbier-2
+  name: git-gateway
   branch: main
-  auth_type: implicit
-  app_id: ${GITHUB_CLIENT_ID}
 
 # Enable Netlify Identity for email login
 local_backend: false
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
-
-# Email-based access control
-# You'll need to enable Netlify Identity in your Netlify dashboard
-# and invite your email: matthieubeaulac@gmail.com
 
 collections:
   - name: "gallery"
