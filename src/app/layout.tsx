@@ -17,7 +17,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Résidence Beaulac | Luxury 4-Bedroom Apartment in Verbier",
+  title: "Chalet Lièvre | Luxury 4-Bedroom Apartment in Verbier",
   description:
     "Experience alpine luxury at its finest. A stunning 4-bedroom apartment in the heart of Verbier, Switzerland. Breathtaking mountain views, premium amenities, and unparalleled comfort.",
   keywords: [
@@ -27,10 +27,10 @@ export const metadata: Metadata = {
     "Swiss Alps",
     "vacation rental",
     "4 bedroom",
-    "Beaulac",
+    "Chalet Lièvre",
   ],
   openGraph: {
-    title: "Résidence Beaulac | Luxury Apartment in Verbier",
+    title: "Chalet Lièvre | Luxury Apartment in Verbier",
     description:
       "A stunning 4-bedroom luxury apartment in the heart of Verbier, Switzerland.",
     type: "website",
