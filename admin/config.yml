@@ -1,33 +1,61 @@
-bbackend:
+backend:
   name: github
   repo: matthieu2910/chalet-lievre-verbier-2
   branch: main
   auth_type: implicit
   app_id: ${GITHUB_CLIENT_ID}
 
+# Enable Netlify Identity for email login
+local_backend: false
+
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
-collections:
-  - name: "home"
-    label: "Page d'accueil"
-    files:
-      - file: "home.md"
-        label: "Home"
-        name: "home"
-        fields:
-          - { label: "Titre", name: "title", widget: "string" }
-          - { label: "Texte", name: "body", widget: "markdown" }
-          - { label: "Galerie", name: "gallery", widget: "list", field: {label: "Image", name: "image", widget: "image"} }
+# Email-based access control
+# You'll need to enable Netlify Identity in your Netlify dashboard
+# and invite your email: matthieubeaulac@gmail.com
 
-  - name: "chalet"
-    label: "Chalet"
+collections:
+  - name: "gallery"
+    label: "Gallery Images"
+    folder: "content/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Image", name: "image", widget: "image", required: true }
+      - { label: "Alt Text", name: "alt", widget: "string", required: true }
+      - { label: "Grid Span", name: "span", widget: "select", options: ["col-span-1 row-span-1", "col-span-2 row-span-1", "col-span-1 row-span-2", "col-span-2 row-span-2"], default: "col-span-1 row-span-1" }
+      - { label: "Order", name: "order", widget: "number", default: 0 }
+
+  - name: "hero"
+    label: "Hero Section"
     files:
-      - file: "chalet.md"
-        label: "Chalet Lièvre"
-        name: "chalet"
+      - file: "content/hero.json"
+        label: "Hero Image"
+        name: "hero"
         fields:
-          - { label: "Titre", name: "title", widget: "string" }
-          - { label: "Description", name: "description", widget: "markdown" }
-          - { label: "Caractéristiques", name: "features", widget: "markdown" }
-          - { label: "Photos", name: "photos", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
+          - { label: "Background Image", name: "image", widget: "image", required: true }
+          - { label: "Alt Text", name: "alt", widget: "string", default: "Luxury mountain view in Verbier" }
+
+  - name: "about"
+    label: "About Section"
+    files:
+      - file: "content/about.json"
+        label: "About Image"
+        name: "about"
+        fields:
+          - { label: "Image", name: "image", widget: "image", required: true }
+          - { label: "Alt Text", name: "alt", widget: "string", default: "Luxury chalet living room with fireplace" }
+
+  - name: "bedrooms"
+    label: "Bedroom Images"
+    folder: "content/bedrooms"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Room Name", name: "name", widget: "string", required: true }
+      - { label: "Image", name: "image", widget: "image", required: true }
+      - { label: "Bed Type", name: "bedType", widget: "string" }
+      - { label: "Guests", name: "guests", widget: "number", default: 2 }
+      - { label: "Features", name: "features", widget: "list", field: { label: "Feature", name: "feature", widget: "string" } }
+      - { label: "Has En-suite", name: "hasEnsuite", widget: "boolean", default: false }

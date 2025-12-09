@@ -4,3 +4,13 @@
 
 [build.environment]
   NODE_VERSION = "18"
+
+# Enable Netlify Identity
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200
+
+# Identity settings
+[identity]
+  enabled = true
