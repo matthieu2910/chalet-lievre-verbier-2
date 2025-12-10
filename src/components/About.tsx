@@ -20,6 +20,11 @@ export function About({ aboutData }: AboutProps) {
   const aboutImage = aboutData?.image || defaultAboutImage;
   const aboutAlt = aboutData?.alt || defaultAboutAlt;
 
+  // Debug: log the image path
+  if (typeof window !== 'undefined' && aboutData) {
+    console.log('About image path:', aboutImage);
+  }
+
   return (
     <section
       id="about"
@@ -42,6 +47,9 @@ export function About({ aboutData }: AboutProps) {
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
+                onError={(e) => {
+                  console.error('About image failed to load:', aboutImage);
+                }}
               />
             </div>
             {/* Decorative Element */}
