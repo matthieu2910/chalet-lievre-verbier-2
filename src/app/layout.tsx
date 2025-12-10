@@ -45,7 +45,30 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${outfit.variable}`}>
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        {children}
+        {/* Netlify Identity Widget - handles invitation tokens */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if (typeof window !== 'undefined') {
+                // Check if this is an invitation or recovery link
+                const hash = window.location.hash;
+                if (hash.includes('invite_token=') || hash.includes('recovery_token=')) {
+                  // Redirect to admin page to handle the token
+                  window.location.href = '/admin/' + hash;
+                } else {
+                  // Load Identity widget for normal pages
+                  const script = document.createElement('script');
+                  script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+                  script.async = true;
+                  document.head.appendChild(script);
+                }
+              }
+            `,
+          }}
+        />
+      </body>
     </html>
   );
 }

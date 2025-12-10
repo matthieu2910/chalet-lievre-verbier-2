@@ -37,6 +37,8 @@
         border-radius: 4px;
         font-weight: 500;
         margin-top: 20px;
+        border: none;
+        cursor: pointer;
       }
       .login-button:hover {
         background: #00b3a5;
@@ -51,23 +53,44 @@
     </div>
     
     <script>
-      // Wait for Netlify Identity to initialize
+      // Check if this is an invitation or password recovery link
+      const hash = window.location.hash;
+      const isInvite = hash.includes('invite_token=') || hash.includes('recovery_token=');
+      
+      // Initialize Netlify Identity
       if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (user) {
-            // User is logged in, load CMS
+        // Handle invitation/recovery tokens
+        if (isInvite) {
+          window.netlifyIdentity.on("init", user => {
+            // Open the widget to handle the token
+            window.netlifyIdentity.open();
+          });
+          
+          // After accepting invite, redirect to admin
+          window.netlifyIdentity.on("login", () => {
+            window.netlifyIdentity.close();
+            // Clear hash and reload
+            window.location.hash = '';
             loadCMS();
-          } else {
-            // User not logged in, show login button
-            showLoginPrompt();
-          }
-        });
-        
-        // Handle login
-        window.netlifyIdentity.on("login", () => {
-          window.netlifyIdentity.close();
-          loadCMS();
-        });
+          });
+        } else {
+          // Normal flow
+          window.netlifyIdentity.on("init", user => {
+            if (user) {
+              // User is logged in, load CMS
+              loadCMS();
+            } else {
+              // User not logged in, show login button
+              showLoginPrompt();
+            }
+          });
+          
+          // Handle login
+          window.netlifyIdentity.on("login", () => {
+            window.netlifyIdentity.close();
+            loadCMS();
+          });
+        }
       } else {
         // Identity widget not loaded, try to load CMS anyway
         setTimeout(loadCMS, 1000);
