@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Send, Mail, Phone, MapPin, Check } from "lucide-react";
+import { Send, Mail, Check } from "lucide-react";
 
 export function Contact() {
   const ref = useRef(null);
@@ -65,40 +65,11 @@ export function Contact() {
                 <div>
                   <p className="text-alpine-500 text-sm">Email</p>
                   <a
-                    href="mailto:stay@residencebeaulac.ch"
+                    href="mailto:stay@chalet-lievre-verbier.com"
                     className="text-alpine-900 hover:text-gold-600 transition-colors"
                   >
-                    stay@residencebeaulac.ch
+                    stay@chalet-lievre-verbier.com
                   </a>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-alpine-100 flex items-center justify-center">
-                  <Phone className="w-5 h-5 text-gold-600" />
-                </div>
-                <div>
-                  <p className="text-alpine-500 text-sm">Phone</p>
-                  <a
-                    href="tel:+41271234567"
-                    className="text-alpine-900 hover:text-gold-600 transition-colors"
-                  >
-                    +41 27 123 45 67
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-alpine-100 flex items-center justify-center">
-                  <MapPin className="w-5 h-5 text-gold-600" />
-                </div>
-                <div>
-                  <p className="text-alpine-500 text-sm">Address</p>
-                  <p className="text-alpine-900">
-                    Rue de Médran
-                    <br />
-                    1936 Verbier, Switzerland
-                  </p>
                 </div>
               </div>
             </div>
