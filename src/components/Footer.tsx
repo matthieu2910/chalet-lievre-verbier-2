@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Instagram, Facebook, Mail } from "lucide-react";
+import { Instagram, Facebook } from "lucide-react";
 
 const footerLinks = [
   { href: "#about", label: "L'Appartement" },
@@ -15,7 +15,6 @@ const footerLinks = [
 const socialLinks = [
   { icon: Instagram, href: "#", label: "Instagram" },
   { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Mail, href: "mailto:stay@chalet-lievre-verbier.com", label: "Email" },
 ];
 
 export function Footer() {
@@ -74,14 +73,6 @@ export function Footer() {
             </h4>
             <address className="not-italic text-alpine-300 space-y-3">
               <p>1936 Verbier, Switzerland</p>
-              <p className="pt-2">
-                <a
-                  href="mailto:stay@chalet-lievre-verbier.com"
-                  className="hover:text-white transition-colors"
-                >
-                  stay@chalet-lievre-verbier.com
-                </a>
-              </p>
             </address>
           </div>
         </div>

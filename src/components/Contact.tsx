@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Send, Mail, Check } from "lucide-react";
+import { Send, Check } from "lucide-react";
 
 export function Contact() {
   const ref = useRef(null);
@@ -75,24 +75,6 @@ export function Contact() {
               Fill out the inquiry form, and we'll get back to you within 24 hours
               with availability and pricing tailored to your dates.
             </p>
-
-            {/* Contact Details */}
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-alpine-100 flex items-center justify-center">
-                  <Mail className="w-5 h-5 text-gold-600" />
-                </div>
-                <div>
-                  <p className="text-alpine-500 text-sm">Email</p>
-                  <a
-                    href="mailto:stay@chalet-lievre-verbier.com"
-                    className="text-alpine-900 hover:text-gold-600 transition-colors"
-                  >
-                    stay@chalet-lievre-verbier.com
-                  </a>
-                </div>
-              </div>
-            </div>
           </motion.div>
 
           {/* Right: Contact Form */}
