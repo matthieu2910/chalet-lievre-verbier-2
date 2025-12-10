@@ -5,7 +5,7 @@ backend:
 # Enable Netlify Identity for email login
 local_backend: false
 
-media_folder: "images/uploads"
+media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
@@ -15,7 +15,7 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Image", name: "image", widget: "image", required: true }
+      - { label: "Image", name: "image", widget: "image", required: true, media_library: { allow_multiple: false } }
       - { label: "Alt Text", name: "alt", widget: "string", required: true }
       - { label: "Grid Span", name: "span", widget: "select", options: ["col-span-1 row-span-1", "col-span-2 row-span-1", "col-span-1 row-span-2", "col-span-2 row-span-2"], default: "col-span-1 row-span-1" }
       - { label: "Order", name: "order", widget: "number", default: 0 }
@@ -28,7 +28,7 @@ collections:
         name: "hero"
         format: "json"
         fields:
-          - { label: "Background Image", name: "image", widget: "image", required: true }
+          - { label: "Background Image", name: "image", widget: "image", required: true, media_library: { allow_multiple: false } }
           - { label: "Alt Text", name: "alt", widget: "string", default: "Luxury mountain view in Verbier" }
 
   - name: "about"
@@ -39,7 +39,7 @@ collections:
         name: "about"
         format: "json"
         fields:
-          - { label: "Image", name: "image", widget: "image", required: true }
+          - { label: "Image", name: "image", widget: "image", required: true, media_library: { allow_multiple: false } }
           - { label: "Alt Text", name: "alt", widget: "string", default: "Luxury chalet living room with fireplace" }
 
   - name: "bedrooms"
@@ -50,7 +50,7 @@ collections:
     format: "json"
     fields:
       - { label: "Room Name", name: "name", widget: "string", required: true }
-      - { label: "Image", name: "image", widget: "image", required: true }
+      - { label: "Image", name: "image", widget: "image", required: true, media_library: { allow_multiple: false } }
       - { label: "Bed Type", name: "bedType", widget: "string" }
       - { label: "Guests", name: "guests", widget: "number", default: 2 }
       - { label: "Features", name: "features", widget: "list", field: { label: "Feature", name: "feature", widget: "string" } }
