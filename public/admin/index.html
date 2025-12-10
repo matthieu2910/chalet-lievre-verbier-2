@@ -43,6 +43,13 @@
       .login-button:hover {
         background: #00b3a5;
       }
+      /* Hide Identity widget iframe when not in use */
+      #netlify-identity-widget {
+        display: none !important;
+      }
+      #netlify-identity-widget[style*="display: block"] {
+        display: block !important;
+      }
     </style>
   </head>
   <body>
@@ -71,13 +78,16 @@
             window.netlifyIdentity.close();
             // Clear hash and reload
             window.location.hash = '';
-            loadCMS();
+            setTimeout(() => {
+              window.location.reload();
+            }, 100);
           });
         } else {
           // Normal flow
           window.netlifyIdentity.on("init", user => {
+            // Close widget immediately if user is logged in
             if (user) {
-              // User is logged in, load CMS
+              window.netlifyIdentity.close();
               loadCMS();
             } else {
               // User not logged in, show login button
@@ -88,13 +98,31 @@
           // Handle login
           window.netlifyIdentity.on("login", () => {
             window.netlifyIdentity.close();
-            loadCMS();
+            setTimeout(() => {
+              loadCMS();
+            }, 100);
+          });
+          
+          // Handle logout
+          window.netlifyIdentity.on("logout", () => {
+            window.netlifyIdentity.close();
+            showLoginPrompt();
           });
         }
       } else {
         // Identity widget not loaded, try to load CMS anyway
         setTimeout(loadCMS, 1000);
       }
+      
+      // Force close Identity widget after a short delay if it's open
+      setTimeout(() => {
+        if (window.netlifyIdentity && window.netlifyIdentity.currentUser()) {
+          const widget = document.getElementById('netlify-identity-widget');
+          if (widget && widget.style.display === 'block') {
+            window.netlifyIdentity.close();
+          }
+        }
+      }, 500);
       
       function showLoginPrompt() {
         const root = document.getElementById('nc-root');
