@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8" />
   <title>Contact Form</title>
 </head>
 <body>
-  <!-- This form is hidden but allows Netlify to detect the form fields -->
-  <form name="contact" netlify netlify-honeypot="bot-field" hidden>
-    <input type="text" name="name" />
-    <input type="email" name="email" />
-    <input type="tel" name="phone" />
-    <input type="text" name="dates" />
-    <input type="text" name="guests" />
-    <textarea name="message"></textarea>
+  <!-- This form allows Netlify to detect the form fields during build -->
+  <form name="contact" method="POST" netlify netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="contact" />
+    <p>
+      <label>Name <input type="text" name="name" /></label>
+    </p>
+    <p>
+      <label>Email <input type="email" name="email" /></label>
+    </p>
+    <p>
+      <label>Phone <input type="tel" name="phone" /></label>
+    </p>
+    <p>
+      <label>Preferred Dates <input type="text" name="dates" /></label>
+    </p>
+    <p>
+      <label>Number of Guests <input type="text" name="guests" /></label>
+    </p>
+    <p>
+      <label>Message <textarea name="message"></textarea></label>
+    </p>
+    <p style="display: none;">
+      <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+    </p>
+    <p>
+      <button type="submit">Send</button>
+    </p>
   </form>
 </body>
 </html>
