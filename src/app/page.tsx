@@ -9,19 +9,23 @@ import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { getGalleryImages } from "@/lib/gallery";
 import { getHeroData } from "@/lib/hero";
+import { getAboutData } from "@/lib/about";
+import { getBedroomsData } from "@/lib/bedrooms";
 
 export default function Home() {
   const galleryImages = getGalleryImages();
   const heroData = getHeroData();
+  const aboutData = getAboutData();
+  const bedroomsData = getBedroomsData();
 
   return (
     <main className="relative">
       <Header />
       <Hero heroData={heroData} />
-      <About />
+      <About aboutData={aboutData} />
       <Amenities />
       <Gallery images={galleryImages} />
-      <Bedrooms />
+      <Bedrooms bedrooms={bedroomsData} />
       <Location />
       <Contact />
       <Footer />
