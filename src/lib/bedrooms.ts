@@ -44,7 +44,8 @@ export function getBedroomsData(): BedroomData[] {
       }
     }
 
-    return bedrooms;
+    // Reverse the order (last one first, and vice versa)
+    return bedrooms.reverse();
   } catch (error) {
     console.error('Error loading bedrooms data:', error);
     return [];

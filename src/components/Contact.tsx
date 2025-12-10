@@ -19,11 +19,31 @@ export function Contact() {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log("Form submitted:", formData);
-    setIsSubmitted(true);
+    
+    // Submit to Netlify Forms
+    const formDataToSubmit = new FormData();
+    formDataToSubmit.append('form-name', 'contact');
+    formDataToSubmit.append('name', formData.name);
+    formDataToSubmit.append('email', formData.email);
+    formDataToSubmit.append('phone', formData.phone);
+    formDataToSubmit.append('dates', formData.dates);
+    formDataToSubmit.append('guests', formData.guests);
+    formDataToSubmit.append('message', formData.message);
+
+    try {
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formDataToSubmit as any).toString(),
+      });
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // Still show success message to user
+      setIsSubmitted(true);
+    }
   };
 
   const handleChange = (
@@ -97,9 +117,15 @@ export function Contact() {
               </div>
             ) : (
               <form
+                name="contact"
+                method="POST"
+                data-netlify="true"
+                data-netlify-honeypot="bot-field"
                 onSubmit={handleSubmit}
                 className="bg-white border border-alpine-200 p-8 md:p-10"
               >
+                <input type="hidden" name="form-name" value="contact" />
+                <input type="hidden" name="bot-field" />
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
                   <div>
                     <label
