@@ -50,11 +50,7 @@
     </style>
   </head>
   <body>
-    <div id="nc-root">
-      <div class="loading">
-        <h2>Loading...</h2>
-      </div>
-    </div>
+    <div id="nc-root"></div>
     
     <!-- Netlify Identity Widget -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
@@ -63,139 +59,176 @@
     <script src="https://unpkg.com/decap-cms@latest/dist/decap-cms.js"></script>
     
     <script>
-      let cmsInitialized = false;
-      let identityInitialized = false;
-      
-      // Check if this is an invitation or password recovery link
-      const hash = window.location.hash;
-      const isInvite = hash.includes('invite_token=') || hash.includes('recovery_token=');
-      
-      // Initialize Netlify Identity
-      function initIdentity() {
-        if (window.netlifyIdentity && !identityInitialized) {
-          identityInitialized = true;
-          
-          // Handle invitation/recovery tokens
-          if (isInvite) {
-            window.netlifyIdentity.on("init", user => {
-              // Open the widget to handle the token
-              window.netlifyIdentity.open();
-            });
-            
-            // After accepting invite, redirect to admin
-            window.netlifyIdentity.on("login", () => {
-              window.netlifyIdentity.close();
-              // Clear hash and reload
-              window.location.hash = '';
-              setTimeout(() => {
-                window.location.reload();
-              }, 100);
-            });
-          } else {
-            // Normal flow
-            window.netlifyIdentity.on("init", user => {
-              // Close widget immediately if user is logged in
-              if (user) {
-                window.netlifyIdentity.close();
-                initCMS();
-              } else {
-                // User not logged in, show login button
-                showLoginPrompt();
-              }
-            });
-            
-            // Handle login
-            window.netlifyIdentity.on("login", () => {
-              window.netlifyIdentity.close();
-              setTimeout(() => {
-                initCMS();
-              }, 200);
-            });
-            
-            // Handle logout
-            window.netlifyIdentity.on("logout", () => {
-              window.netlifyIdentity.close();
-              cmsInitialized = false;
-              showLoginPrompt();
-            });
+      (function() {
+        'use strict';
+        
+        let cmsInitialized = false;
+        let identityReady = false;
+        let cmsReady = false;
+        let user = null;
+        
+        // Check if this is an invitation or password recovery link
+        const hash = window.location.hash;
+        const isInvite = hash.includes('invite_token=') || hash.includes('recovery_token=');
+        
+        // Show loading state
+        function showLoading() {
+          const root = document.getElementById('nc-root');
+          if (root) {
+            root.innerHTML = '<div class="loading"><h2>Loading...</h2></div>';
           }
         }
-      }
-      
-      // Initialize CMS
-      function initCMS() {
-        if (cmsInitialized) {
-          return;
-        }
         
-        if (window.CMS && window.netlifyIdentity && window.netlifyIdentity.currentUser()) {
-          try {
-            // Clear the root div before initializing
-            const root = document.getElementById('nc-root');
-            if (root) {
-              root.innerHTML = '';
-            }
-            
-            // Initialize CMS
-            window.CMS.init();
-            cmsInitialized = true;
-          } catch (error) {
-            console.error('CMS initialization error:', error);
-            document.getElementById('nc-root').innerHTML = `
-              <div class="loading">
-                <h2>CMS initialization failed</h2>
-                <p>Error: ${error.message}</p>
-                <p>Please refresh the page.</p>
+        // Show login prompt
+        function showLoginPrompt() {
+          const root = document.getElementById('nc-root');
+          if (root) {
+            root.innerHTML = `
+              <div class="login-prompt">
+                <h2>Chalet Lièvre Admin</h2>
+                <p>Please log in to access the content management system.</p>
+                <button class="login-button" onclick="window.netlifyIdentity && window.netlifyIdentity.open('login')">Log in with Netlify Identity</button>
               </div>
             `;
           }
-        } else if (!window.CMS) {
-          // CMS script not loaded yet
-          setTimeout(initCMS, 100);
-        } else {
-          // Not logged in
-          showLoginPrompt();
         }
-      }
-      
-      function showLoginPrompt() {
-        const root = document.getElementById('nc-root');
-        if (root) {
-          root.innerHTML = `
-            <div class="login-prompt">
-              <h2>Chalet Lièvre Admin</h2>
-              <p>Please log in to access the content management system.</p>
-              <button class="login-button" onclick="window.netlifyIdentity && window.netlifyIdentity.open('login')">Log in with Netlify Identity</button>
-            </div>
-          `;
-        }
-      }
-      
-      // Wait for scripts to load
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-          initIdentity();
-          if (!isInvite) {
-            setTimeout(initCMS, 500);
+        
+        // Initialize CMS
+        function initCMS() {
+          if (cmsInitialized) {
+            return;
           }
-        });
-      } else {
-        initIdentity();
-        if (!isInvite) {
-          setTimeout(initCMS, 500);
-        }
-      }
-      
-      // Force close Identity widget after login
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("login", () => {
-          setTimeout(() => {
-            if (window.netlifyIdentity) {
-              window.netlifyIdentity.close();
+          
+          if (!cmsReady || !identityReady) {
+            return;
+          }
+          
+          if (!user) {
+            showLoginPrompt();
+            return;
+          }
+          
+          if (!window.CMS) {
+            setTimeout(initCMS, 100);
+            return;
+          }
+          
+          try {
+            const root = document.getElementById('nc-root');
+            if (!root) {
+              console.error('CMS root element not found');
+              return;
             }
-          }, 100);
-        });
-      }
+            
+            // Remove all child nodes safely
+            while (root.firstChild) {
+              root.removeChild(root.firstChild);
+            }
+            
+            // Small delay to ensure DOM is clean
+            setTimeout(() => {
+              try {
+                window.CMS.init();
+                cmsInitialized = true;
+              } catch (error) {
+                console.error('CMS init error:', error);
+                root.innerHTML = `
+                  <div class="loading">
+                    <h2>CMS initialization failed</h2>
+                    <p>Error: ${error.message}</p>
+                    <p>Please refresh the page.</p>
+                  </div>
+                `;
+              }
+            }, 50);
+          } catch (error) {
+            console.error('CMS setup error:', error);
+            const root = document.getElementById('nc-root');
+            if (root) {
+              root.innerHTML = `
+                <div class="loading">
+                  <h2>CMS setup failed</h2>
+                  <p>Error: ${error.message}</p>
+                  <p>Please refresh the page.</p>
+                </div>
+              `;
+            }
+          }
+        }
+        
+        // Initialize Netlify Identity
+        function initIdentity() {
+          if (window.netlifyIdentity) {
+            // Handle invitation/recovery tokens
+            if (isInvite) {
+              window.netlifyIdentity.on("init", function(u) {
+                window.netlifyIdentity.open();
+              });
+              
+              window.netlifyIdentity.on("login", function() {
+                window.netlifyIdentity.close();
+                window.location.hash = '';
+                setTimeout(function() {
+                  window.location.reload();
+                }, 100);
+              });
+            } else {
+              window.netlifyIdentity.on("init", function(u) {
+                identityReady = true;
+                user = u;
+                
+                if (user) {
+                  window.netlifyIdentity.close();
+                }
+                
+                initCMS();
+              });
+              
+              window.netlifyIdentity.on("login", function(u) {
+                user = u;
+                identityReady = true;
+                window.netlifyIdentity.close();
+                setTimeout(function() {
+                  initCMS();
+                }, 300);
+              });
+              
+              window.netlifyIdentity.on("logout", function() {
+                user = null;
+                cmsInitialized = false;
+                window.netlifyIdentity.close();
+                showLoginPrompt();
+              });
+            }
+          } else {
+            // Identity not loaded, wait a bit
+            setTimeout(initIdentity, 100);
+          }
+        }
+        
+        // Check when CMS script is ready
+        function checkCMSReady() {
+          if (window.CMS) {
+            cmsReady = true;
+            initCMS();
+          } else {
+            setTimeout(checkCMSReady, 100);
+          }
+        }
+        
+        // Start initialization
+        showLoading();
+        
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', function() {
+            initIdentity();
+            checkCMSReady();
+          });
+        } else {
+          initIdentity();
+          checkCMSReady();
+        }
+      })();
     </script>
   </body>
 </html>
