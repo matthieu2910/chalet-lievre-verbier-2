@@ -63,26 +63,16 @@
         'use strict';
         
         let cmsInitialized = false;
-        let identityReady = false;
-        let cmsReady = false;
         let user = null;
         
         // Check if this is an invitation or password recovery link
         const hash = window.location.hash;
         const isInvite = hash.includes('invite_token=') || hash.includes('recovery_token=');
         
-        // Show loading state
-        function showLoading() {
-          const root = document.getElementById('nc-root');
-          if (root) {
-            root.innerHTML = '<div class="loading"><h2>Loading...</h2></div>';
-          }
-        }
-        
         // Show login prompt
         function showLoginPrompt() {
           const root = document.getElementById('nc-root');
-          if (root) {
+          if (root && !cmsInitialized) {
             root.innerHTML = `
               <div class="login-prompt">
                 <h2>Chalet Lièvre Admin</h2>
@@ -93,18 +83,9 @@
           }
         }
         
-        // Initialize CMS
+        // Initialize CMS - don't manipulate DOM, let CMS handle it
         function initCMS() {
           if (cmsInitialized) {
-            return;
-          }
-          
-          if (!cmsReady || !identityReady) {
-            return;
-          }
-          
-          if (!user) {
-            showLoginPrompt();
             return;
           }
           
@@ -113,41 +94,23 @@
             return;
           }
           
+          if (!user) {
+            showLoginPrompt();
+            return;
+          }
+          
           try {
-            const root = document.getElementById('nc-root');
-            if (!root) {
-              console.error('CMS root element not found');
-              return;
-            }
-            
-            // Remove all child nodes safely
-            while (root.firstChild) {
-              root.removeChild(root.firstChild);
-            }
-            
-            // Small delay to ensure DOM is clean
-            setTimeout(() => {
-              try {
-                window.CMS.init();
-                cmsInitialized = true;
-              } catch (error) {
-                console.error('CMS init error:', error);
-                root.innerHTML = `
-                  <div class="loading">
-                    <h2>CMS initialization failed</h2>
-                    <p>Error: ${error.message}</p>
-                    <p>Please refresh the page.</p>
-                  </div>
-                `;
-              }
-            }, 50);
+            // Don't clear DOM - let CMS initialize into the root
+            // CMS will handle its own DOM management
+            window.CMS.init();
+            cmsInitialized = true;
           } catch (error) {
-            console.error('CMS setup error:', error);
+            console.error('CMS init error:', error);
             const root = document.getElementById('nc-root');
             if (root) {
               root.innerHTML = `
                 <div class="loading">
-                  <h2>CMS setup failed</h2>
+                  <h2>CMS initialization failed</h2>
                   <p>Error: ${error.message}</p>
                   <p>Please refresh the page.</p>
                 </div>
@@ -174,19 +137,19 @@
               });
             } else {
               window.netlifyIdentity.on("init", function(u) {
-                identityReady = true;
                 user = u;
                 
                 if (user) {
                   window.netlifyIdentity.close();
+                  // Wait a bit for Identity to fully initialize
+                  setTimeout(initCMS, 200);
+                } else {
+                  showLoginPrompt();
                 }
-                
-                initCMS();
               });
               
               window.netlifyIdentity.on("login", function(u) {
                 user = u;
-                identityReady = true;
                 window.netlifyIdentity.close();
                 setTimeout(function() {
                   initCMS();
@@ -206,27 +169,13 @@
           }
         }
         
-        // Check when CMS script is ready
-        function checkCMSReady() {
-          if (window.CMS) {
-            cmsReady = true;
-            initCMS();
-          } else {
-            setTimeout(checkCMSReady, 100);
-          }
-        }
-        
         // Start initialization
-        showLoading();
-        
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', function() {
             initIdentity();
-            checkCMSReady();
           });
         } else {
           initIdentity();
-          checkCMSReady();
         }
       })();
     </script>
