@@ -5,9 +5,6 @@
     <title>Chalet Lièvre Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
-    <!-- Netlify Identity Widget -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    
     <style>
       body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -59,114 +56,145 @@
       </div>
     </div>
     
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
+    <!-- Decap CMS -->
+    <script src="https://unpkg.com/decap-cms@latest/dist/decap-cms.js"></script>
+    
     <script>
+      let cmsInitialized = false;
+      let identityInitialized = false;
+      
       // Check if this is an invitation or password recovery link
       const hash = window.location.hash;
       const isInvite = hash.includes('invite_token=') || hash.includes('recovery_token=');
       
       // Initialize Netlify Identity
-      if (window.netlifyIdentity) {
-        // Handle invitation/recovery tokens
-        if (isInvite) {
-          window.netlifyIdentity.on("init", user => {
-            // Open the widget to handle the token
-            window.netlifyIdentity.open();
-          });
+      function initIdentity() {
+        if (window.netlifyIdentity && !identityInitialized) {
+          identityInitialized = true;
           
-          // After accepting invite, redirect to admin
-          window.netlifyIdentity.on("login", () => {
-            window.netlifyIdentity.close();
-            // Clear hash and reload
-            window.location.hash = '';
-            setTimeout(() => {
-              window.location.reload();
-            }, 100);
-          });
-        } else {
-          // Normal flow
-          window.netlifyIdentity.on("init", user => {
-            // Close widget immediately if user is logged in
-            if (user) {
+          // Handle invitation/recovery tokens
+          if (isInvite) {
+            window.netlifyIdentity.on("init", user => {
+              // Open the widget to handle the token
+              window.netlifyIdentity.open();
+            });
+            
+            // After accepting invite, redirect to admin
+            window.netlifyIdentity.on("login", () => {
               window.netlifyIdentity.close();
-              loadCMS();
-            } else {
-              // User not logged in, show login button
+              // Clear hash and reload
+              window.location.hash = '';
+              setTimeout(() => {
+                window.location.reload();
+              }, 100);
+            });
+          } else {
+            // Normal flow
+            window.netlifyIdentity.on("init", user => {
+              // Close widget immediately if user is logged in
+              if (user) {
+                window.netlifyIdentity.close();
+                initCMS();
+              } else {
+                // User not logged in, show login button
+                showLoginPrompt();
+              }
+            });
+            
+            // Handle login
+            window.netlifyIdentity.on("login", () => {
+              window.netlifyIdentity.close();
+              setTimeout(() => {
+                initCMS();
+              }, 200);
+            });
+            
+            // Handle logout
+            window.netlifyIdentity.on("logout", () => {
+              window.netlifyIdentity.close();
+              cmsInitialized = false;
               showLoginPrompt();
-            }
-          });
-          
-          // Handle login
-          window.netlifyIdentity.on("login", () => {
-            window.netlifyIdentity.close();
-            setTimeout(() => {
-              loadCMS();
-            }, 100);
-          });
-          
-          // Handle logout
-          window.netlifyIdentity.on("logout", () => {
-            window.netlifyIdentity.close();
-            showLoginPrompt();
-          });
-        }
-      } else {
-        // Identity widget not loaded, try to load CMS anyway
-        setTimeout(loadCMS, 1000);
-      }
-      
-      // Force close Identity widget after a short delay if it's open
-      setTimeout(() => {
-        if (window.netlifyIdentity && window.netlifyIdentity.currentUser()) {
-          const widget = document.getElementById('netlify-identity-widget');
-          if (widget && widget.style.display === 'block') {
-            window.netlifyIdentity.close();
+            });
           }
         }
-      }, 500);
+      }
+      
+      // Initialize CMS
+      function initCMS() {
+        if (cmsInitialized) {
+          return;
+        }
+        
+        if (window.CMS && window.netlifyIdentity && window.netlifyIdentity.currentUser()) {
+          try {
+            // Clear the root div before initializing
+            const root = document.getElementById('nc-root');
+            if (root) {
+              root.innerHTML = '';
+            }
+            
+            // Initialize CMS
+            window.CMS.init();
+            cmsInitialized = true;
+          } catch (error) {
+            console.error('CMS initialization error:', error);
+            document.getElementById('nc-root').innerHTML = `
+              <div class="loading">
+                <h2>CMS initialization failed</h2>
+                <p>Error: ${error.message}</p>
+                <p>Please refresh the page.</p>
+              </div>
+            `;
+          }
+        } else if (!window.CMS) {
+          // CMS script not loaded yet
+          setTimeout(initCMS, 100);
+        } else {
+          // Not logged in
+          showLoginPrompt();
+        }
+      }
       
       function showLoginPrompt() {
         const root = document.getElementById('nc-root');
-        root.innerHTML = `
-          <div class="login-prompt">
-            <h2>Chalet Lièvre Admin</h2>
-            <p>Please log in to access the content management system.</p>
-            <button class="login-button" onclick="window.netlifyIdentity.open('login')">Log in with Netlify Identity</button>
-          </div>
-        `;
-      }
-      
-      function loadCMS() {
-        // Check if CMS script is already loaded
-        if (window.CMS) {
-          initializeCMS();
-        } else {
-          // Load CMS script dynamically
-          const script = document.createElement('script');
-          script.src = 'https://unpkg.com/decap-cms@latest/dist/decap-cms.js';
-          script.onload = initializeCMS;
-          script.onerror = () => {
-            document.getElementById('nc-root').innerHTML = `
-              <div class="loading">
-                <h2>Error loading CMS</h2>
-                <p>Failed to load Decap CMS. Please refresh the page.</p>
-              </div>
-            `;
-          };
-          document.head.appendChild(script);
-        }
-      }
-      
-      function initializeCMS() {
-        if (window.CMS) {
-          window.CMS.init();
-        } else {
-          document.getElementById('nc-root').innerHTML = `
-            <div class="loading">
-              <h2>CMS initialization failed</h2>
-              <p>Please check the browser console for errors.</p>
+        if (root) {
+          root.innerHTML = `
+            <div class="login-prompt">
+              <h2>Chalet Lièvre Admin</h2>
+              <p>Please log in to access the content management system.</p>
+              <button class="login-button" onclick="window.netlifyIdentity && window.netlifyIdentity.open('login')">Log in with Netlify Identity</button>
             </div>
           `;
         }
+      }
+      
+      // Wait for scripts to load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          initIdentity();
+          if (!isInvite) {
+            setTimeout(initCMS, 500);
+          }
+        });
+      } else {
+        initIdentity();
+        if (!isInvite) {
+          setTimeout(initCMS, 500);
+        }
+      }
+      
+      // Force close Identity widget after login
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("login", () => {
+          setTimeout(() => {
+            if (window.netlifyIdentity) {
+              window.netlifyIdentity.close();
+            }
+          }, 100);
+        });
       }
     </script>
   </body>
