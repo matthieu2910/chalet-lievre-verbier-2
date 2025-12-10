@@ -26,6 +26,7 @@ collections:
       - file: "content/hero.json"
         label: "Hero Image"
         name: "hero"
+        format: "json"
         fields:
           - { label: "Background Image", name: "image", widget: "image", required: true }
           - { label: "Alt Text", name: "alt", widget: "string", default: "Luxury mountain view in Verbier" }
@@ -36,6 +37,7 @@ collections:
       - file: "content/about.json"
         label: "About Image"
         name: "about"
+        format: "json"
         fields:
           - { label: "Image", name: "image", widget: "image", required: true }
           - { label: "Alt Text", name: "alt", widget: "string", default: "Luxury chalet living room with fireplace" }
@@ -45,6 +47,7 @@ collections:
     folder: "content/bedrooms"
     create: true
     slug: "{{slug}}"
+    format: "json"
     fields:
       - { label: "Room Name", name: "name", widget: "string", required: true }
       - { label: "Image", name: "image", widget: "image", required: true }
