@@ -3,15 +3,26 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import type { HeroData } from "@/lib/hero";
 
-export function Hero() {
+interface HeroProps {
+  heroData?: HeroData | null;
+}
+
+const defaultHeroImage = "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=2940&auto=format&fit=crop";
+const defaultHeroAlt = "Luxury mountain view in Verbier";
+
+export function Hero({ heroData }: HeroProps) {
+  const heroImage = heroData?.image || defaultHeroImage;
+  const heroAlt = heroData?.alt || defaultHeroAlt;
+
   return (
     <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=2940&auto=format&fit=crop"
-          alt="Luxury mountain view in Verbier"
+          src={heroImage}
+          alt={heroAlt}
           fill
           priority
           className="object-cover"

@@ -8,14 +8,16 @@ import { Location } from "@/components/Location";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { getGalleryImages } from "@/lib/gallery";
+import { getHeroData } from "@/lib/hero";
 
 export default function Home() {
   const galleryImages = getGalleryImages();
+  const heroData = getHeroData();
 
   return (
     <main className="relative">
       <Header />
-      <Hero />
+      <Hero heroData={heroData} />
       <About />
       <Amenities />
       <Gallery images={galleryImages} />
