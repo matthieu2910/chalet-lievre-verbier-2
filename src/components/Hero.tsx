@@ -41,9 +41,9 @@ export function Hero() {
           <Image
             src="/logo.png"
             alt="Chalet Lièvre Logo"
-            width={400}
-            height={300}
-            className="w-auto h-auto max-w-[400px] max-h-[300px] object-contain"
+            width={500}
+            height={400}
+            className="w-auto h-auto max-w-[500px] max-h-[400px] object-contain drop-shadow-lg"
             priority
           />
         </motion.div>
