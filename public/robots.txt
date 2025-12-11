@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://chalet-lievre-verbier.com/sitemap.xml
+
+# Disallow admin area
+Disallow: /admin/
+

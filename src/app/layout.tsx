@@ -17,25 +17,94 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Chalet Lièvre | Luxury 4-Bedroom Apartment in Verbier",
-  description:
-    "Experience alpine luxury at its finest. A stunning 4-bedroom apartment in the heart of Verbier, Switzerland. Breathtaking mountain views, premium amenities, and unparalleled comfort.",
-  keywords: [
-    "Verbier",
-    "luxury apartment",
-    "ski chalet",
-    "Swiss Alps",
-    "vacation rental",
-    "4 bedroom",
-    "Chalet Lièvre",
-  ],
-  openGraph: {
-    title: "Chalet Lièvre | Luxury Apartment in Verbier",
-    description:
-      "A stunning 4-bedroom luxury apartment in the heart of Verbier, Switzerland.",
-    type: "website",
-    locale: "en_US",
+  metadataBase: new URL("https://chalet-lievre-verbier.com"),
+  title: {
+    default: "Rent Apartment in Verbier | Chalet Lièvre - Luxury 4-Bedroom Rental",
+    template: "%s | Rent Chalet in Verbier",
   },
+  description:
+    "Rent a luxury apartment in Verbier at Chalet Lièvre. Stunning 110 m², 4-bedroom chalet rental with panoramic mountain views. Perfect for ski holidays and summer adventures. Book your Verbier apartment rental now.",
+  keywords: [
+    "rent apartment Verbier",
+    "rent chalet Verbier",
+    "Verbier apartment rental",
+    "Verbier chalet rental",
+    "luxury apartment Verbier",
+    "ski chalet rental",
+    "Swiss Alps vacation rental",
+    "4 bedroom Verbier",
+    "Chalet Lièvre",
+    "appartement à louer Verbier",
+    "chalet à louer Verbier",
+    "location appartement Verbier",
+    "location chalet Verbier",
+    "Verbier accommodation",
+    "luxury ski rental",
+    "alpine retreat",
+    "Switzerland vacation",
+    "mountain view apartment",
+    "ski in ski out",
+    "Savoleyres lift",
+    "rent Verbier",
+    "Verbier rental",
+  ],
+  authors: [{ name: "Chalet Lièvre" }],
+  creator: "Chalet Lièvre",
+  publisher: "Chalet Lièvre",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    title: "Rent Apartment in Verbier | Chalet Lièvre - Luxury 4-Bedroom Rental",
+    description:
+      "Rent a luxury apartment in Verbier. Stunning 110 m², 4-bedroom chalet rental with panoramic mountain views. Perfect for ski holidays and alpine adventures.",
+    url: "https://chalet-lievre-verbier.com",
+    siteName: "Chalet Lièvre Verbier",
+    images: [
+      {
+        url: "/images/uploads/exterieur.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Chalet Lièvre - Rent luxury apartment in Verbier",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rent Apartment in Verbier | Chalet Lièvre",
+    description:
+      "Rent a luxury 4-bedroom apartment in Verbier. 110 m² chalet rental with panoramic mountain views. Perfect for ski holidays.",
+    images: ["/images/uploads/exterieur.jpg"],
+  },
+  icons: {
+    icon: [
+      { url: "/logo.png", type: "image/png", sizes: "32x32" },
+      { url: "/logo.png", type: "image/png", sizes: "16x16" },
+    ],
+    apple: [
+      { url: "/logo.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/logo.png",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "https://chalet-lievre-verbier.com",
+  },
+  category: "Travel",
 };
 
 export default function RootLayout({

@@ -66,22 +66,22 @@ export function About({ aboutData }: AboutProps) {
               Welcome to
             </p>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-alpine-900 mb-8 leading-tight">
-              An Alpine
+              Rent an Alpine
               <br />
               <span className="italic font-light">Masterpiece</span>
             </h2>
             <div className="space-y-6 text-alpine-700 leading-relaxed">
               <p>
-                Discover Chalet Lièvre, a stunning 110 m² retreat nestled in the
-                heart of Verbier, where alpine charm meets contemporary luxury.
-                This meticulously designed 4-bedroom, 2-bathroom apartment offers
-                a refined living space, perfect for both relaxation and adventure.
+                Rent Chalet Lièvre, a stunning 110 m² apartment for rent in Verbier, 
+                where alpine charm meets contemporary luxury. This meticulously designed 
+                4-bedroom, 2-bathroom chalet rental offers a refined living space, perfect 
+                for both relaxation and adventure.
               </p>
               <p>
                 Every detail has been thoughtfully curated—from the floor-to-ceiling
                 windows that frame panoramic mountain views to the premium finishes
                 that adorn every surface. Whether you're drawn by world-class
-                skiing or summer escapades, Chalet Lièvre is your sanctuary in the Alps.
+                skiing or summer escapades, this Verbier apartment rental is your sanctuary in the Alps.
               </p>
               <p>
                 Begin your day with breathtaking sunrises over the Grand Combin, unwind

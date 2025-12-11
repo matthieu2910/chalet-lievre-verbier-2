@@ -65,7 +65,7 @@ export function Hero({ heroData }: HeroProps) {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-white/80 text-lg md:text-xl lg:text-2xl font-light max-w-2xl mx-auto mb-12"
         >
-          A stunning 4-bedroom alpine sanctuary where luxury meets the mountains
+          Rent a luxury 4-bedroom apartment in Verbier. Alpine sanctuary where luxury meets the mountains
         </motion.p>
 
         <motion.div
@@ -78,7 +78,7 @@ export function Hero({ heroData }: HeroProps) {
             href="#contact"
             className="px-8 py-4 bg-white text-alpine-900 font-medium tracking-wider uppercase text-sm hover:bg-gold-100 transition-colors duration-300"
           >
-            Book Your Stay
+            Rent This Apartment
           </a>
           <a
             href="#gallery"
