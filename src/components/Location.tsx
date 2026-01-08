@@ -103,23 +103,23 @@ export function Location() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative w-full"
           >
-            <div className="relative aspect-square lg:aspect-[4/3] min-h-[400px] bg-alpine-800 border border-alpine-700 flex items-center justify-center overflow-hidden">
+            <div className="relative w-full aspect-[4/3] sm:aspect-[3/2] lg:aspect-[4/3] bg-alpine-800 border border-alpine-700 flex items-center justify-center overflow-hidden rounded-sm">
               {/* Stylized Map Placeholder */}
-              <div className="text-center p-8 w-full">
-                <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gold-600/20 flex items-center justify-center">
-                  <MapPin className="w-8 h-8 text-gold-400" />
+              <div className="text-center p-4 sm:p-6 md:p-8 w-full h-full flex flex-col items-center justify-center">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 rounded-full bg-gold-600/20 flex items-center justify-center">
+                  <MapPin className="w-6 h-6 sm:w-8 sm:h-8 text-gold-400" />
                 </div>
-                <h3 className="font-serif text-2xl text-white mb-2">
+                <h3 className="font-serif text-xl sm:text-2xl text-white mb-2">
                   Verbier, Switzerland
                 </h3>
-                <p className="text-alpine-400 text-sm mb-6">
+                <p className="text-alpine-400 text-xs sm:text-sm mb-4 sm:mb-6">
                   1936m altitude Valais Canton
                 </p>
                 <a
                   href="https://maps.google.com/?q=Verbier,Switzerland"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gold-600 text-white text-sm font-medium tracking-wider uppercase hover:bg-gold-500 transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-gold-600 text-white text-xs sm:text-sm font-medium tracking-wider uppercase hover:bg-gold-500 transition-colors rounded"
                 >
                   {t.location.viewOnMaps}
                 </a>
