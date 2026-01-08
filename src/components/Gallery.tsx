@@ -56,6 +56,8 @@ export function Gallery({ images }: GalleryProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
 
   // Use provided images, CMS images, or fallback
   const galleryImages = images && images.length > 0 
@@ -72,6 +74,34 @@ export function Gallery({ images }: GalleryProps) {
     setSelectedImage((prev) =>
       prev !== null ? (prev === galleryImages.length - 1 ? 0 : prev + 1) : null
     );
+  };
+
+  // Touch handlers for mobile swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    
+    const distance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50; // Minimum distance for a swipe
+
+    if (distance > minSwipeDistance) {
+      // Swipe left - next image
+      handleNext();
+    } else if (distance < -minSwipeDistance) {
+      // Swipe right - previous image
+      handlePrev();
+    }
+
+    // Reset
+    touchStartX.current = null;
+    touchEndX.current = null;
   };
 
   return (
@@ -142,23 +172,25 @@ export function Gallery({ images }: GalleryProps) {
 
             {/* Navigation */}
             <button
-              className="absolute left-4 md:left-8 text-white/70 hover:text-white transition-colors"
+              className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-white active:text-white transition-colors z-10 p-2 md:p-0"
               onClick={(e) => {
                 e.stopPropagation();
                 handlePrev();
               }}
+              aria-label="Image précédente"
             >
-              <ChevronLeft className="w-10 h-10" />
+              <ChevronLeft className="w-8 h-8 md:w-10 md:h-10" />
             </button>
 
             <button
-              className="absolute right-4 md:right-8 text-white/70 hover:text-white transition-colors"
+              className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-white active:text-white transition-colors z-10 p-2 md:p-0"
               onClick={(e) => {
                 e.stopPropagation();
                 handleNext();
               }}
+              aria-label="Image suivante"
             >
-              <ChevronRight className="w-10 h-10" />
+              <ChevronRight className="w-8 h-8 md:w-10 md:h-10" />
             </button>
 
             {/* Image */}
@@ -170,6 +202,9 @@ export function Gallery({ images }: GalleryProps) {
               transition={{ duration: 0.3 }}
               className="relative w-full max-w-5xl aspect-[4/3]"
               onClick={(e) => e.stopPropagation()}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
               <Image
                 src={galleryImages[selectedImage].src}
