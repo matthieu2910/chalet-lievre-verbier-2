@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Outfit } from "next/font/google";
 import "./globals.css";
-import { LanguageProvider } from "@/contexts/LanguageContext";
+import { Providers } from "@/components/Providers";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -116,9 +116,9 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${cormorant.variable} ${outfit.variable}`}>
       <body className="font-sans">
-        <LanguageProvider>
+        <Providers>
           {children}
-        </LanguageProvider>
+        </Providers>
         {/* Netlify Identity Widget - handles invitation tokens */}
         <script
           dangerouslySetInnerHTML={{
@@ -140,7 +140,6 @@ export default function RootLayout({
             `,
           }}
         />
-        </LanguageProvider>
       </body>
     </html>
   );
