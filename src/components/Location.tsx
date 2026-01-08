@@ -14,11 +14,23 @@ export function Location() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const distances = distanceKeys.map((key, index) => ({
-    icon: distanceIcons[index],
-    name: t.location.distances[key],
-    distance: index < 2 ? `3-5 min ${t.location.walk}` : `2-10 min ${t.location.drive}`,
-  }));
+  const distances = distanceKeys.map((key, index) => {
+    let distance = "";
+    if (key === "savoleyres") {
+      distance = `3-5 min ${t.location.walk}`;
+    } else if (key === "verbierCenter") {
+      distance = `10 min ${t.location.walk}`;
+    } else if (key === "genevaAirport") {
+      distance = "2 hours";
+    } else {
+      distance = `10 min ${t.location.drive}`;
+    }
+    return {
+      icon: distanceIcons[index],
+      name: t.location.distances[key],
+      distance,
+    };
+  });
 
   return (
     <section id="location" ref={ref} className="section-padding bg-alpine-900">

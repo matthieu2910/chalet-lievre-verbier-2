@@ -107,7 +107,7 @@ export const translations = {
       subtitle: "Au cœur de Verbier, Savoleyres",
       title: "Emplacement",
       titleItalic: "Privilégié",
-      description: "Le Chalet Lièvre bénéficie d'un emplacement privilégié dans l'un des quartiers les plus prestigieux de Verbier. À quelques pas de la télécabine Savoleyres—avec accès privé—et du centre animé du village, vous aurez un accès immédiat à tout ce que la station légendaire a à offrir, sans compromettre la tranquillité ou l'intimité.",
+      description: "Le Chalet Lièvre bénéficie d'un emplacement privilégié dans l'un des quartiers les plus prestigieux de Verbier, proche du Chalet d'Adrien. À quelques pas de la télécabine Savoleyres—avec accès privé—et du centre animé du village, vous aurez un accès immédiat à tout ce que la station légendaire a à offrir, sans compromettre la tranquillité ou l'intimité.",
       distances: {
         savoleyres: "Télécabine Savoleyres",
         verbierCenter: "Centre de Verbier",
@@ -294,7 +294,7 @@ export const translations = {
       subtitle: "At the Heart of Verbier, Savoleyres",
       title: "Prime",
       titleItalic: "Location",
-      description: "Chalet d'Adrien enjoys a prime location in one of Verbier's most prestigious neighborhoods. Just steps from the Savoleyres lift—with private access—and the lively village center, you'll have immediate access to all the legendary resort has to offer, without compromising on tranquility or privacy.",
+      description: "Chalet Lièvre enjoys a prime location in one of Verbier's most prestigious neighborhoods, close to Chalet d'Adrien. Just steps from the Savoleyres lift—with private access—and the lively village center, you'll have immediate access to all the legendary resort has to offer, without compromising on tranquility or privacy.",
       distances: {
         savoleyres: "Savoleyres lift",
         verbierCenter: "Verbier Village Center",
