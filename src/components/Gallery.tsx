@@ -7,6 +7,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { getGalleryImages, type GalleryImage } from "@/lib/gallery";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Fallback images if no CMS images are available
 const fallbackImages: GalleryImage[] = [
@@ -53,6 +54,7 @@ interface GalleryProps {
 }
 
 export function Gallery({ images }: GalleryProps) {
+  const { t } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
@@ -115,10 +117,10 @@ export function Gallery({ images }: GalleryProps) {
           className="text-center mb-16 md:mb-20"
         >
           <p className="text-gold-600 tracking-[0.2em] uppercase text-sm mb-4">
-            Visual Tour
+            {t.gallery.subtitle}
           </p>
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-alpine-900">
-            Gallery
+            {t.gallery.title}
           </h2>
         </motion.div>
 
@@ -147,7 +149,7 @@ export function Gallery({ images }: GalleryProps) {
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-alpine-600">No gallery images available.</p>
+            <p className="text-alpine-600">{t.gallery.noImages}</p>
           </div>
         )}
       </div>
@@ -177,7 +179,7 @@ export function Gallery({ images }: GalleryProps) {
                 e.stopPropagation();
                 handlePrev();
               }}
-              aria-label="Image précédente"
+              aria-label={t.gallery.previousImage}
             >
               <ChevronLeft className="w-8 h-8 md:w-10 md:h-10" />
             </button>
@@ -188,7 +190,7 @@ export function Gallery({ images }: GalleryProps) {
                 e.stopPropagation();
                 handleNext();
               }}
-              aria-label="Image suivante"
+              aria-label={t.gallery.nextImage}
             >
               <ChevronRight className="w-8 h-8 md:w-10 md:h-10" />
             </button>

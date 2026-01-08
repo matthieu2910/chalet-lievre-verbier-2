@@ -4,56 +4,21 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { MapPin, Mountain, Clock, Plane, Train, Car } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const distances = [
-  {
-    icon: Mountain,
-    name: "Savoleyres lift",
-    distance: "3 min walk",
-  },
-  {
-    icon: MapPin,
-    name: "Verbier Village Center",
-    distance: "5 min walk",
-  },
-  {
-    icon: Plane,
-    name: "Geneva Airport",
-    distance: "2h drive",
-  },
-  {
-    icon: Train,
-    name: "Le Châble Train Station",
-    distance: "10 min drive",
-  },
-];
-
-const activities = [
-  {
-    season: "Winter",
-    items: [
-      "World-class skiing & snowboarding",
-      "Off-piste adventures",
-      "Ice climbing",
-      "après-ski",
-      "Spa & wellness",
-    ],
-  },
-  {
-    season: "Summer",
-    items: [
-      "Mountain biking",
-      "Hiking trails",
-      "Golf courses",
-      "Paragliding",
-      "Fine dining",
-    ],
-  },
-];
+const distanceIcons = [Mountain, MapPin, Plane, Train];
+const distanceKeys = ["savoleyres", "verbierCenter", "genevaAirport", "leChable"] as const;
 
 export function Location() {
+  const { t } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const distances = distanceKeys.map((key, index) => ({
+    icon: distanceIcons[index],
+    name: t.location.distances[key],
+    distance: index < 2 ? `3-5 min ${t.location.walk}` : `2-10 min ${t.location.drive}`,
+  }));
 
   return (
     <section id="location" ref={ref} className="section-padding bg-alpine-900">
@@ -66,16 +31,13 @@ export function Location() {
             transition={{ duration: 0.8 }}
           >
             <p className="text-gold-400 tracking-[0.2em] uppercase text-sm mb-4">
-              At the Heart of Verbier, Savoleyres
+              {t.location.subtitle}
             </p>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-8">
-              Prime <span className="italic font-light">Location</span>
+              {t.location.title} <span className="italic font-light">{t.location.titleItalic}</span>
             </h2>
             <p className="text-alpine-300 leading-relaxed mb-8">
-              Chalet d'Adrien enjoys a prime location in one of Verbier's most prestigious
-              neighborhoods. Just steps from the Savoleyres lift—with private access—and
-              the lively village center, you'll have immediate access to all the legendary
-              resort has to offer, without compromising on tranquility or privacy.
+              {t.location.description}
             </p>
 
             {/* Distances */}
@@ -99,24 +61,38 @@ export function Location() {
 
             {/* Activities */}
             <div className="grid grid-cols-2 gap-8">
-              {activities.map((activity) => (
-                <div key={activity.season}>
-                  <h3 className="font-serif text-xl text-white mb-4">
-                    {activity.season}
-                  </h3>
-                  <ul className="space-y-2">
-                    {activity.items.map((item) => (
-                      <li
-                        key={item}
-                        className="text-alpine-300 text-sm flex items-center gap-2"
-                      >
-                        <span className="w-1 h-1 bg-gold-400 rounded-full" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+              <div>
+                <h3 className="font-serif text-xl text-white mb-4">
+                  {t.location.winter}
+                </h3>
+                <ul className="space-y-2">
+                  {t.location.activities.winter.map((item) => (
+                    <li
+                      key={item}
+                      className="text-alpine-300 text-sm flex items-center gap-2"
+                    >
+                      <span className="w-1 h-1 bg-gold-400 rounded-full" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-serif text-xl text-white mb-4">
+                  {t.location.summer}
+                </h3>
+                <ul className="space-y-2">
+                  {t.location.activities.summer.map((item) => (
+                    <li
+                      key={item}
+                      className="text-alpine-300 text-sm flex items-center gap-2"
+                    >
+                      <span className="w-1 h-1 bg-gold-400 rounded-full" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </motion.div>
 
@@ -125,11 +101,11 @@ export function Location() {
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
+            className="relative w-full"
           >
-            <div className="aspect-square lg:aspect-auto lg:h-full min-h-[400px] bg-alpine-800 border border-alpine-700 flex items-center justify-center">
+            <div className="relative aspect-square lg:aspect-[4/3] min-h-[400px] bg-alpine-800 border border-alpine-700 flex items-center justify-center overflow-hidden">
               {/* Stylized Map Placeholder */}
-              <div className="text-center p-8">
+              <div className="text-center p-8 w-full">
                 <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gold-600/20 flex items-center justify-center">
                   <MapPin className="w-8 h-8 text-gold-400" />
                 </div>
@@ -145,13 +121,13 @@ export function Location() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-gold-600 text-white text-sm font-medium tracking-wider uppercase hover:bg-gold-500 transition-colors"
                 >
-                  View on Google Maps
+                  {t.location.viewOnMaps}
                 </a>
               </div>
             </div>
 
             {/* Decorative Border */}
-            <div className="absolute -top-4 -left-4 w-full h-full border border-gold-600/30 -z-10 hidden lg:block" />
+            <div className="absolute -top-4 -left-4 w-full h-full border border-gold-600/30 -z-10 hidden lg:block pointer-events-none" />
           </motion.div>
         </div>
       </div>

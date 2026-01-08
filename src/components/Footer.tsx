@@ -2,15 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Instagram, Facebook } from "lucide-react";
-
-const footerLinks = [
-  { href: "#about", label: "L'Appartement" },
-  { href: "#amenities", label: "Amenities" },
-  { href: "#gallery", label: "Gallery" },
-  { href: "#bedrooms", label: "Bedrooms" },
-  { href: "#location", label: "Location" },
-  { href: "#contact", label: "Contact" },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const socialLinks = [
   { icon: Instagram, href: "#", label: "Instagram" },
@@ -18,6 +10,16 @@ const socialLinks = [
 ];
 
 export function Footer() {
+  const { t } = useLanguage();
+
+  const footerLinks = [
+    { href: "#about", label: t.nav.apartment },
+    { href: "#amenities", label: t.nav.amenities },
+    { href: "#gallery", label: t.nav.gallery },
+    { href: "#bedrooms", label: t.nav.bedrooms },
+    { href: "#location", label: t.nav.location },
+    { href: "#contact", label: t.nav.contact },
+  ];
   return (
     <footer className="bg-alpine-950 text-white">
       {/* Main Footer */}
@@ -29,8 +31,7 @@ export function Footer() {
               Chalet Lièvre
             </h3>
             <p className="text-alpine-400 leading-relaxed mb-6">
-              A luxury 4-bedroom apartment in the heart of Verbier, offering
-              unparalleled alpine experiences and refined comfort.
+              {t.footer.description}
             </p>
             {/* Social Links */}
             <div className="flex items-center gap-4">
@@ -50,7 +51,7 @@ export function Footer() {
           {/* Navigation */}
           <div>
             <h4 className="text-sm font-medium tracking-wider uppercase text-alpine-400 mb-6">
-              Explore
+              {t.footer.explore}
             </h4>
             <ul className="space-y-3">
               {footerLinks.map((link) => (
@@ -69,7 +70,7 @@ export function Footer() {
           {/* Contact Info */}
           <div>
             <h4 className="text-sm font-medium tracking-wider uppercase text-alpine-400 mb-6">
-              Contact
+              {t.footer.contact}
             </h4>
             <address className="not-italic text-alpine-300 space-y-3">
               <p>1936 Verbier, Switzerland</p>
@@ -82,14 +83,14 @@ export function Footer() {
       <div className="border-t border-alpine-800">
         <div className="container-wide px-6 md:px-12 lg:px-20 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-alpine-500 text-sm">
-            © {new Date().getFullYear()} Chalet Lièvre. All rights reserved.
+            © {new Date().getFullYear()} Chalet Lièvre. {t.footer.rights}.
           </p>
           <div className="flex items-center gap-6 text-alpine-500 text-sm">
             <a href="#" className="hover:text-white transition-colors">
-              Privacy Policy
+              {t.footer.privacy}
             </a>
             <a href="#" className="hover:text-white transition-colors">
-              Terms & Conditions
+              {t.footer.terms}
             </a>
           </div>
         </div>

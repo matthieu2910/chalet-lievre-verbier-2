@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import type { HeroData } from "@/lib/hero";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface HeroProps {
   heroData?: HeroData | null;
@@ -13,6 +14,7 @@ const defaultHeroImage = "https://images.unsplash.com/photo-1551882547-ff40c63fe
 const defaultHeroAlt = "Luxury mountain view in Verbier";
 
 export function Hero({ heroData }: HeroProps) {
+  const { t } = useLanguage();
   const heroImage = heroData?.image || defaultHeroImage;
   const heroAlt = heroData?.alt || defaultHeroAlt;
 
@@ -40,7 +42,7 @@ export function Hero({ heroData }: HeroProps) {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-gold-300 text-sm md:text-base tracking-[0.3em] uppercase mb-6"
         >
-          Verbier, Swiss Alps
+          {t.hero.subtitle}
         </motion.p>
 
         <motion.div
@@ -65,7 +67,7 @@ export function Hero({ heroData }: HeroProps) {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-white/80 text-lg md:text-xl lg:text-2xl font-light max-w-2xl mx-auto mb-12"
         >
-          Rent a luxury 4-bedroom apartment in Verbier. Alpine sanctuary where luxury meets the mountains
+          {t.hero.description}
         </motion.p>
 
         <motion.div
@@ -78,13 +80,13 @@ export function Hero({ heroData }: HeroProps) {
             href="#contact"
             className="px-8 py-4 bg-white text-alpine-900 font-medium tracking-wider uppercase text-sm hover:bg-gold-100 transition-colors duration-300"
           >
-            Rent This Apartment
+            {t.hero.rentButton}
           </a>
           <a
             href="#gallery"
             className="px-8 py-4 border border-white/40 text-white font-medium tracking-wider uppercase text-sm hover:bg-white/10 transition-colors duration-300"
           >
-            View Gallery
+            {t.hero.viewGallery}
           </a>
         </motion.div>
       </div>
@@ -112,8 +114,8 @@ export function Hero({ heroData }: HeroProps) {
         transition={{ duration: 0.8, delay: 1 }}
         className="absolute bottom-8 right-8 hidden md:flex flex-col items-end gap-1 text-white/60 text-sm"
       >
-        <span>4 Bedrooms</span>
-        <span>7 Guests</span>
+        <span>{t.hero.bedrooms}</span>
+        <span>{t.hero.guests}</span>
         <span>110m²</span>
       </motion.div>
     </section>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Outfit } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -19,11 +20,11 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   metadataBase: new URL("https://chalet-lievre-verbier.com"),
   title: {
-    default: "Rent Apartment in Verbier | Chalet Lièvre - Luxury 4-Bedroom Rental",
-    template: "%s | Rent Chalet in Verbier",
+    default: "Location Appartement à Verbier | Chalet Lièvre - Location Luxe 4 Chambres",
+    template: "%s | Location Chalet à Verbier",
   },
   description:
-    "Rent a luxury apartment in Verbier at Chalet Lièvre. Stunning 110 m², 4-bedroom chalet rental with panoramic mountain views. Perfect for ski holidays and summer adventures. Book your Verbier apartment rental now.",
+    "Louez un appartement de luxe à Verbier au Chalet Lièvre. Magnifique location de chalet de 110 m², 4 chambres avec vues panoramiques sur les montagnes. Parfait pour les vacances au ski et les aventures estivales. Réservez votre location d'appartement à Verbier maintenant.",
   keywords: [
     "rent apartment Verbier",
     "rent chalet Verbier",
@@ -57,9 +58,9 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: "Rent Apartment in Verbier | Chalet Lièvre - Luxury 4-Bedroom Rental",
+    title: "Location Appartement à Verbier | Chalet Lièvre - Location Luxe 4 Chambres",
     description:
-      "Rent a luxury apartment in Verbier. Stunning 110 m², 4-bedroom chalet rental with panoramic mountain views. Perfect for ski holidays and alpine adventures.",
+      "Louez un appartement de luxe à Verbier. Magnifique location de chalet de 110 m², 4 chambres avec vues panoramiques sur les montagnes. Parfait pour les vacances au ski et les aventures alpines.",
     url: "https://chalet-lievre-verbier.com",
     siteName: "Chalet Lièvre Verbier",
     images: [
@@ -67,17 +68,17 @@ export const metadata: Metadata = {
         url: "/images/uploads/exterieur.jpg",
         width: 1200,
         height: 630,
-        alt: "Chalet Lièvre - Rent luxury apartment in Verbier",
+        alt: "Chalet Lièvre - Location appartement de luxe à Verbier",
       },
     ],
-    locale: "en_US",
+    locale: "fr_FR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rent Apartment in Verbier | Chalet Lièvre",
+    title: "Location Appartement à Verbier | Chalet Lièvre",
     description:
-      "Rent a luxury 4-bedroom apartment in Verbier. 110 m² chalet rental with panoramic mountain views. Perfect for ski holidays.",
+      "Louez un appartement de luxe 4 chambres à Verbier. Location de chalet de 110 m² avec vues panoramiques sur les montagnes. Parfait pour les vacances au ski.",
     images: ["/images/uploads/exterieur.jpg"],
   },
   icons: {
@@ -113,9 +114,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${outfit.variable}`}>
+    <html lang="fr" className={`${cormorant.variable} ${outfit.variable}`}>
       <body className="font-sans">
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
         {/* Netlify Identity Widget - handles invitation tokens */}
         <script
           dangerouslySetInnerHTML={{
@@ -137,6 +140,7 @@ export default function RootLayout({
             `,
           }}
         />
+        </LanguageProvider>
       </body>
     </html>
   );

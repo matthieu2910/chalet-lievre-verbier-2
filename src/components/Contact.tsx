@@ -5,8 +5,10 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Send, Check } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function Contact() {
+  const { t } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -63,17 +65,15 @@ export function Contact() {
             transition={{ duration: 0.8 }}
           >
             <p className="text-gold-600 tracking-[0.2em] uppercase text-sm mb-4">
-              Get in Touch
+              {t.contact.subtitle}
             </p>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-alpine-900 mb-8">
-              Book Your
+              {t.contact.title}
               <br />
-              <span className="italic font-light">Alpine Escape</span>
+              <span className="italic font-light">{t.contact.titleItalic}</span>
             </h2>
             <p className="text-alpine-600 leading-relaxed mb-12">
-              Ready to experience the magic of Verbier from our luxury residence?
-              Fill out the inquiry form, and we'll get back to you within 24 hours
-              with availability and pricing tailored to your dates.
+              {t.contact.description}
             </p>
           </motion.div>
 
@@ -90,10 +90,10 @@ export function Contact() {
                     <Check className="w-8 h-8 text-green-600" />
                   </div>
                   <h3 className="font-serif text-2xl text-alpine-900 mb-4">
-                    Thank You!
+                    {t.contact.success.title}
                   </h3>
                   <p className="text-alpine-600">
-                    We've received your inquiry and will respond within 24 hours.
+                    {t.contact.success.message}
                   </p>
                 </div>
               </div>
@@ -114,7 +114,7 @@ export function Contact() {
                       htmlFor="name"
                       className="block text-alpine-700 text-sm mb-2"
                     >
-                      Full Name *
+                      {t.contact.form.fullName} *
                     </label>
                     <input
                       type="text"
@@ -124,7 +124,7 @@ export function Contact() {
                       value={formData.name}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-alpine-200 bg-alpine-50 text-alpine-900 focus:outline-none focus:border-gold-400 transition-colors"
-                      placeholder="John Smith"
+                      placeholder={t.contact.form.namePlaceholder}
                     />
                   </div>
                   <div>
@@ -132,7 +132,7 @@ export function Contact() {
                       htmlFor="email"
                       className="block text-alpine-700 text-sm mb-2"
                     >
-                      Email Address *
+                      {t.contact.form.email} *
                     </label>
                     <input
                       type="email"
@@ -142,7 +142,7 @@ export function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-alpine-200 bg-alpine-50 text-alpine-900 focus:outline-none focus:border-gold-400 transition-colors"
-                      placeholder="john@example.com"
+                      placeholder={t.contact.form.emailPlaceholder}
                     />
                   </div>
                 </div>
@@ -153,7 +153,7 @@ export function Contact() {
                       htmlFor="phone"
                       className="block text-alpine-700 text-sm mb-2"
                     >
-                      Phone Number
+                      {t.contact.form.phone}
                     </label>
                     <input
                       type="tel"
@@ -162,7 +162,7 @@ export function Contact() {
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-alpine-200 bg-alpine-50 text-alpine-900 focus:outline-none focus:border-gold-400 transition-colors"
-                      placeholder="+1 234 567 890"
+                      placeholder={t.contact.form.phonePlaceholder}
                     />
                   </div>
                   <div>
@@ -170,7 +170,7 @@ export function Contact() {
                       htmlFor="guests"
                       className="block text-alpine-700 text-sm mb-2"
                     >
-                      Number of Guests *
+                      {t.contact.form.guests} *
                     </label>
                     <select
                       id="guests"
@@ -180,11 +180,11 @@ export function Contact() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-alpine-200 bg-alpine-50 text-alpine-900 focus:outline-none focus:border-gold-400 transition-colors"
                     >
-                      <option value="">Select guests</option>
-                      <option value="1-2">1-2 guests</option>
-                      <option value="3-4">3-4 guests</option>
-                      <option value="5-6">5-6 guests</option>
-                      <option value="7-8">7-8 guests</option>
+                      <option value="">{t.contact.form.selectGuests}</option>
+                      <option value="1-2">{t.contact.form.guestsOptions["1-2"]}</option>
+                      <option value="3-4">{t.contact.form.guestsOptions["3-4"]}</option>
+                      <option value="5-6">{t.contact.form.guestsOptions["5-6"]}</option>
+                      <option value="7-8">{t.contact.form.guestsOptions["7-8"]}</option>
                     </select>
                   </div>
                 </div>
@@ -194,7 +194,7 @@ export function Contact() {
                     htmlFor="dates"
                     className="block text-alpine-700 text-sm mb-2"
                   >
-                    Preferred Dates *
+                    {t.contact.form.dates} *
                   </label>
                   <input
                     type="text"
@@ -204,7 +204,7 @@ export function Contact() {
                     value={formData.dates}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-alpine-200 bg-alpine-50 text-alpine-900 focus:outline-none focus:border-gold-400 transition-colors"
-                    placeholder="e.g., Dec 20-27, 2024"
+                    placeholder={t.contact.form.datePlaceholder}
                   />
                 </div>
 
@@ -213,7 +213,7 @@ export function Contact() {
                     htmlFor="message"
                     className="block text-alpine-700 text-sm mb-2"
                   >
-                    Message
+                    {t.contact.form.message}
                   </label>
                   <textarea
                     id="message"
@@ -222,7 +222,7 @@ export function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-alpine-200 bg-alpine-50 text-alpine-900 focus:outline-none focus:border-gold-400 transition-colors resize-none"
-                    placeholder="Tell us about your trip plans, special requests, or questions..."
+                    placeholder={t.contact.form.messagePlaceholder}
                   />
                 </div>
 
@@ -231,7 +231,7 @@ export function Contact() {
                   className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-alpine-900 text-white font-medium tracking-wider uppercase text-sm hover:bg-alpine-800 transition-colors"
                 >
                   <Send className="w-4 h-4" />
-                  Send Inquiry
+                  {t.contact.form.send}
                 </button>
               </form>
             )}

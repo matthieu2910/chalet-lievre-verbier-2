@@ -1,6 +1,9 @@
 "use client";
 
+import { useLanguage } from "@/contexts/LanguageContext";
+
 export function BookingCalendar() {
+  const { t } = useLanguage();
   // Extract the listing ID from the Airbnb URL
   const listingId = "1551342108913458049";
   const airbnbUrl = `https://www.airbnb.fr/rooms/${listingId}`;
@@ -11,14 +14,13 @@ export function BookingCalendar() {
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
           <p className="text-gold-600 tracking-[0.2em] uppercase text-sm mb-4">
-            Disponibilités
+            {t.booking.subtitle}
           </p>
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-alpine-900 mb-6">
-            Réservez votre séjour
+            {t.booking.title}
           </h2>
           <p className="text-alpine-600 max-w-2xl mx-auto">
-            Consultez les disponibilités et réservez directement via Airbnb pour
-            les meilleurs tarifs et une confirmation instantanée.
+            {t.booking.description}
           </p>
         </div>
 
@@ -43,12 +45,10 @@ export function BookingCalendar() {
                   </svg>
                 </div>
                 <h3 className="font-serif text-2xl md:text-3xl text-alpine-900 mb-4">
-                  Réservez maintenant sur Airbnb
+                  {t.booking.bookNow}
                 </h3>
                 <p className="text-alpine-600 mb-8 max-w-lg mx-auto">
-                  Cliquez sur le bouton ci-dessous pour accéder à notre page Airbnb, 
-                  consulter le calendrier de disponibilités en temps réel, voir les tarifs 
-                  et effectuer votre réservation en toute sécurité.
+                  {t.booking.bookDescription}
                 </p>
               </div>
 
@@ -70,13 +70,13 @@ export function BookingCalendar() {
                     clipRule="evenodd"
                   />
                 </svg>
-                Voir les disponibilités et réserver
+                {t.booking.cta}
               </a>
 
               {/* Additional Info */}
               <div className="mt-8 pt-8 border-t border-alpine-200">
                 <p className="text-alpine-500 text-sm">
-                  Réservation sécurisée via Airbnb • Annulation flexible • Paiement sécurisé
+                  {t.booking.security}
                 </p>
               </div>
             </div>

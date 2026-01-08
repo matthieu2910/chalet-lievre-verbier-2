@@ -5,6 +5,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 import type { AboutData } from "@/lib/about";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface AboutProps {
   aboutData?: AboutData | null;
@@ -14,6 +15,7 @@ const defaultAboutImage = "https://images.unsplash.com/photo-1600585154526-990dc
 const defaultAboutAlt = "Luxury chalet living room with fireplace";
 
 export function About({ aboutData }: AboutProps) {
+  const { t } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -63,46 +65,32 @@ export function About({ aboutData }: AboutProps) {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <p className="text-gold-600 tracking-[0.2em] uppercase text-sm mb-4">
-              Welcome to
+              {t.about.welcome}
             </p>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-alpine-900 mb-8 leading-tight">
-              Rent an Alpine
+              {t.about.title}
               <br />
-              <span className="italic font-light">Masterpiece</span>
+              <span className="italic font-light">{t.about.titleItalic}</span>
             </h2>
             <div className="space-y-6 text-alpine-700 leading-relaxed">
-              <p>
-                Rent Chalet Lièvre, a stunning 110 m² apartment for rent in Verbier, 
-                where alpine charm meets contemporary luxury. This meticulously designed 
-                4-bedroom, 2-bathroom chalet rental offers a refined living space, perfect 
-                for both relaxation and adventure.
-              </p>
-              <p>
-                Every detail has been thoughtfully curated—from the floor-to-ceiling
-                windows that frame panoramic mountain views to the premium finishes
-                that adorn every surface. Whether you're drawn by world-class
-                skiing or summer escapades, this Verbier apartment rental is your sanctuary in the Alps.
-              </p>
-              <p>
-                Begin your day with breathtaking sunrises over the Grand Combin, unwind
-                by the fireplace after a day on the slopes, and immerse yourself in
-                Verbier's legendary hospitality—all from the comfort of your private alpine haven.
-              </p>
+              <p>{t.about.description1}</p>
+              <p>{t.about.description2}</p>
+              <p>{t.about.description3}</p>
             </div>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-8 mt-12 pt-12 border-t border-alpine-200">
               <div>
                 <span className="font-serif text-4xl text-alpine-900">110</span>
-                <p className="text-alpine-500 text-sm mt-1">Square Meters</p>
+                <p className="text-alpine-500 text-sm mt-1">{t.about.squareMeters}</p>
               </div>
               <div>
                 <span className="font-serif text-4xl text-alpine-900">4</span>
-                <p className="text-alpine-500 text-sm mt-1">Bedrooms with queen size beds</p>
+                <p className="text-alpine-500 text-sm mt-1">{t.about.bedroomsWithBeds}</p>
               </div>
               <div>
                 <span className="font-serif text-4xl text-alpine-900">7</span>
-                <p className="text-alpine-500 text-sm mt-1">Guests</p>
+                <p className="text-alpine-500 text-sm mt-1">{t.about.guests}</p>
               </div>
             </div>
           </motion.div>

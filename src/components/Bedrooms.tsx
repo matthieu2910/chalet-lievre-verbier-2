@@ -6,6 +6,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { Bed, Users, Bath } from "lucide-react";
 import type { BedroomData } from "@/lib/bedrooms";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface BedroomsProps {
   bedrooms?: BedroomData[];
@@ -48,6 +49,7 @@ const fallbackBedrooms: BedroomData[] = [
 ];
 
 export function Bedrooms({ bedrooms }: BedroomsProps) {
+  const { t } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -65,14 +67,13 @@ export function Bedrooms({ bedrooms }: BedroomsProps) {
           className="text-center mb-16 md:mb-20"
         >
           <p className="text-gold-600 tracking-[0.2em] uppercase text-sm mb-4">
-            Rest & Retreat
+            {t.bedrooms.subtitle}
           </p>
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-alpine-900">
-            The <span className="italic font-light">Bedrooms</span>
+            {t.bedrooms.title} <span className="italic font-light">{t.bedrooms.titleItalic}</span>
           </h2>
           <p className="mt-6 text-alpine-600 max-w-2xl mx-auto">
-            Four beautifully appointed bedrooms, each designed as a peaceful haven
-            with premium linens, blackout curtains, and thoughtful touches.
+            {t.bedrooms.description}
           </p>
         </motion.div>
 
@@ -115,13 +116,13 @@ export function Bedrooms({ bedrooms }: BedroomsProps) {
                     {bedroom.guests && (
                       <div className="flex items-center gap-2">
                         <Users className="w-4 h-4" />
-                        <span className="text-sm">{bedroom.guests} Guests</span>
+                        <span className="text-sm">{bedroom.guests} {t.bedrooms.guests}</span>
                       </div>
                     )}
                     {bedroom.hasEnsuite && (
                       <div className="flex items-center gap-2">
                         <Bath className="w-4 h-4" />
-                        <span className="text-sm">En-suite</span>
+                        <span className="text-sm">{t.bedrooms.ensuite}</span>
                       </div>
                     )}
                   </div>
@@ -145,7 +146,7 @@ export function Bedrooms({ bedrooms }: BedroomsProps) {
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-alpine-600">No bedrooms available.</p>
+            <p className="text-alpine-600">{t.bedrooms.noBedrooms}</p>
           </div>
         )}
       </div>

@@ -25,8 +25,8 @@ export default function Home() {
       "@context": "https://schema.org",
       "@type": "Accommodation",
       "@id": "https://chalet-lievre-verbier.com/#accommodation",
-      "name": "Chalet Lièvre - Rent Apartment in Verbier",
-      "description": "Rent a luxury apartment in Verbier at Chalet Lièvre. Stunning 110 m², 4-bedroom chalet rental with panoramic 180° mountain views. Perfect for ski holidays and summer adventures.",
+      "name": "Chalet Lièvre - Location Appartement à Verbier",
+      "description": "Louez un appartement de luxe à Verbier au Chalet Lièvre. Magnifique location de chalet de 110 m², 4 chambres avec vues panoramiques à 180° sur les montagnes. Parfait pour les vacances au ski et les aventures estivales.",
       "image": [
         "https://chalet-lievre-verbier.com/images/uploads/exterieur.jpg",
         "https://chalet-lievre-verbier.com/images/uploads/img-20251124-wa0007.jpg"
@@ -58,12 +58,12 @@ export default function Home() {
       "amenityFeature": [
         {
           "@type": "LocationFeatureSpecification",
-          "name": "Panoramic 180deg views",
+          "name": "Vues panoramiques à 180°",
           "value": true
         },
         {
           "@type": "LocationFeatureSpecification",
-          "name": "Private parking",
+          "name": "Parking privé",
           "value": true
         },
         {
@@ -73,7 +73,7 @@ export default function Home() {
         },
         {
           "@type": "LocationFeatureSpecification",
-          "name": "Fully equipped kitchen",
+          "name": "Cuisine entièrement équipée",
           "value": true
         },
         {
@@ -90,14 +90,14 @@ export default function Home() {
     {
       "@context": "https://schema.org",
       "@type": "Product",
-      "name": "Chalet Lièvre - Verbier Apartment Rental",
-      "description": "Rent a luxury 4-bedroom apartment in Verbier. 110 m² chalet rental with panoramic mountain views, perfect for ski holidays.",
+      "name": "Chalet Lièvre - Location Appartement à Verbier",
+      "description": "Louez un appartement de luxe 4 chambres à Verbier. Location de chalet de 110 m² avec vues panoramiques sur les montagnes, parfait pour les vacances au ski.",
       "image": "https://chalet-lievre-verbier.com/images/uploads/exterieur.jpg",
       "brand": {
         "@type": "Brand",
         "name": "Chalet Lièvre"
       },
-      "category": "Vacation Rental",
+      "category": "Location de vacances",
       "offers": {
         "@type": "Offer",
         "availability": "https://schema.org/InStock",
@@ -120,7 +120,7 @@ export default function Home() {
       "@type": "LocalBusiness",
       "@id": "https://chalet-lievre-verbier.com/#business",
       "name": "Chalet Lièvre",
-      "description": "Luxury apartment and chalet rental in Verbier, Switzerland",
+      "description": "Location d'appartement et chalet de luxe à Verbier, Suisse",
       "image": "https://chalet-lievre-verbier.com/images/uploads/exterieur.jpg",
       "address": {
         "@type": "PostalAddress",
