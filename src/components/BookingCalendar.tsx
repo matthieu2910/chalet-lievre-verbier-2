@@ -1,27 +1,16 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-
 export function BookingCalendar() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   // Extract the listing ID from the Airbnb URL
   const listingId = "1551342108913458049";
   const airbnbUrl = `https://www.airbnb.fr/rooms/${listingId}`;
 
   return (
-    <section id="booking" ref={ref} className="section-padding bg-alpine-50">
+    <section id="booking" className="section-padding bg-alpine-50">
       <div className="container-wide">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12 md:mb-16"
-        >
+        <div className="text-center mb-12 md:mb-16">
           <p className="text-gold-600 tracking-[0.2em] uppercase text-sm mb-4">
             Disponibilités
           </p>
@@ -32,16 +21,11 @@ export function BookingCalendar() {
             Consultez notre calendrier de disponibilités et réservez directement via Airbnb pour
             les meilleurs tarifs et une confirmation instantanée.
           </p>
-        </motion.div>
+        </div>
 
         {/* Airbnb Calendar Embed */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="max-w-6xl mx-auto"
-        >
-          <div className="bg-white border border-alpine-200 rounded-lg overflow-hidden shadow-lg p-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="bg-white border border-alpine-200 rounded-lg overflow-hidden shadow-lg p-4 mb-8">
             <iframe
               src={`https://www.airbnb.fr/rooms/${listingId}/embed?check_in=&check_out=&adults=1&children=0&infants=0`}
               width="100%"
@@ -52,11 +36,12 @@ export function BookingCalendar() {
               title="Airbnb Booking Calendar"
               style={{ minHeight: "650px", display: "block" }}
               allow="payment"
+              loading="lazy"
             />
           </div>
 
           {/* Direct Link */}
-          <div className="text-center mt-8">
+          <div className="text-center">
             <a
               href={airbnbUrl}
               target="_blank"
@@ -77,7 +62,7 @@ export function BookingCalendar() {
               </svg>
             </a>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -6,6 +6,7 @@ import { Gallery } from "@/components/Gallery";
 import { Bedrooms } from "@/components/Bedrooms";
 import { Location } from "@/components/Location";
 import { Contact } from "@/components/Contact";
+import { BookingCalendar } from "@/components/BookingCalendar";
 import { Footer } from "@/components/Footer";
 import { getGalleryImages } from "@/lib/gallery";
 import { getHeroData } from "@/lib/hero";
@@ -154,6 +155,7 @@ export default function Home() {
         <Bedrooms bedrooms={bedroomsData} />
         <Location />
         <Contact />
+        <BookingCalendar />
         <Footer />
       </main>
     </>
